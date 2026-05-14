@@ -1,0 +1,17 @@
+{% extends 'master.html' %}
+{% block "main" %}
+{% if user.is_authenticated %}
+<main class="home-page">
+    <section class="welcome-card">
+        <div class="user-avatar">{{ user.username|first|upper }}</div>
+        <h1>Welcome back, {{ user.first_name|default:user.username }}!</h1>
+        <p>What would you like to do today?</p>
+        <div class="home-actions">
+            <a class="home-btn home-btn-primary" href="/add-blog">Add New Blog</a>
+            <a class="home-btn" href="/all-blogs">View All Blogs</a>
+            <a class="home-btn" href="/my-blogs">My Blogs</a>
+        </div>
+    </section>
+</main>
+{% endif %}
+{% endblock %}

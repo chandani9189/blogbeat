@@ -1,0 +1,41 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block "main" %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<main class="add-blog-page">
+    <section class="add-blog-header">
+        <h1>Add a Blog</h1>
+        <p>Share your thoughts with the world</p>
+    </section>
+
+    <section class="add-blog-card">
+        <form class="add-blog-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="blog-form-group">
+                <label for="blog-title">Title</label>
+                <input id="blog-title" type="text" name="title" placeholder="Enter blog title">
+            </div>
+
+            <div class="blog-form-group">
+                <label for="blog-description">Description</label>
+                <textarea id="blog-description" name="description" placeholder="Write your blog description"></textarea>
+            </div>
+
+            <div class="blog-form-group">
+                <label for="blog-image">Cover Image</label>
+                <label class="upload-box" for="blog-image">
+                    <span class="upload-icon" aria-hidden="true"></span>
+                    <span>Click to upload an image</span>
+                    <small>JPG, PNG up to 10MB</small>
+                </label>
+                <input id="blog-image" class="file-input" type="file" name="image" accept="image/*">
+            </div>
+
+            <div class="add-blog-actions">
+                <button class="publish-btn" type="submit">Publish Blog</button>
+                <button class="blog-reset-btn" type="reset">Reset</button>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

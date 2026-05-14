@@ -1,0 +1,61 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block "main" %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<main class="blogs-page">
+    <section class="blogs-header">
+        <div>
+            <h1>All Blogs</h1>
+            <p>Browse all published articles</p>
+        </div>
+        <a class="add-blog-btn" href="/add-blog">+ Add Blog</a>
+    </section>
+
+    <section class="blogs-toolbar">
+        <form class="blog-search" method="get">
+            <input type="text" name="srch" value="{{ srch }}" placeholder="Search blogs by title...">
+        </form>
+        <div class="blog-count"><strong>{{ blogs|length }}</strong> total blogs</div>
+    </section>
+
+    <section class="blogs-table-card">
+        <table class="blogs-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Created By</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for blog in blogs %}
+                <tr>
+                    <td><span class="blog-id">#{{ blog.id }}</span></td>
+                    <td class="blog-title">{{ blog.title }}</td>
+                    <td>{{ blog.description }}</td>
+                    <td>
+                        {% if blog.image %}
+                        <img class="blog-thumb" src="{{ blog.image.url }}" alt="blog image">
+                        {% else %}
+                        <span class="no-image">No<br>Image</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="author-chip">
+                            <span class="author-initial">{{ blog.user.first_name|default:blog.user.username|first|upper }}</span>
+                            {{ blog.user.first_name|default:blog.user.username }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="empty-blogs" colspan="5">No blogs found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlogBeat</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="/home">Blog<span>Beat</span></a>
+        </div>
+
+        <nav>
+            {% if user.is_authenticated %}
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/add-blog">Add Blog</a></li>
+                <li><a href="/all-blogs">All Blogs</a></li>
+                <li><a href="/my-blogs">My Blogs</a></li>
+                <li><a href="/logout" class="logout">Logout</a></li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/accounts/login/">Login</a></li>
+            </ul>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% block "main" %}
+    {% endblock %}
+
+    <footer class="site-footer">
+        <p>&copy; 2024 <span>BlogBeat</span>. All rights reserved.</p>
+        <p>Made with Django</p>
+    </footer>
+
+</body>
+</html>

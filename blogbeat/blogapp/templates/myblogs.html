@@ -1,0 +1,57 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block "main" %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<main class="my-blogs-page">
+    <section class="my-blogs-header">
+        <div>
+            <h1>My Blogs</h1>
+            <p>Blogs you've written</p>
+        </div>
+        <a class="add-blog-btn" href="/add-blog">+ Add Blog</a>
+    </section>
+
+    <div class="my-blog-count"><strong>{{ blogs|length }}</strong> blog published</div>
+
+    <section class="blogs-table-card my-blogs-table-card">
+        <table class="blogs-table my-blogs-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for blog in blogs %}
+                <tr>
+                    <td><span class="blog-id">#{{ blog.id }}</span></td>
+                    <td class="blog-title">{{ blog.title }}</td>
+                    <td>{{ blog.description }}</td>
+                    <td>
+                        {% if blog.image %}
+                        <img class="blog-thumb" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                        {% else %}
+                        <span class="no-image">No<br>Image</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form class="delete-form" method="post" action="/delete-blog/{{ blog.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button class="delete-btn" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="empty-blogs" colspan="5">No blogs found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}
